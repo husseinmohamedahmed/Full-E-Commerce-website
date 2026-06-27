@@ -123,7 +123,7 @@ exports.webhook=asynchandler(async (req,res,next)=>{
       return res.status(400).json(" Webhook signature verification failed")
     }
   }
-   if(event.type=='payment_intent.succeeded'){
+   if(event.type=='checkout.session.completed'){
     console.log(event.object);
   }
   }
