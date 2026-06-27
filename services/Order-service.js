@@ -4,6 +4,7 @@ const Cart = require("../models/Cart-Model");
 const Order=require('../models/Order-Model.js')
 const Product=require('../models/Product-Model.js')
 const factory=require('./handlersFactory.js');
+const User=require('../models/User-Model.js')
 const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 
@@ -108,7 +109,7 @@ exports.checkOutSession= asynchandler(async (req,res,next)=>{
 }) 
 
 const createCardOrder=async (session)=>{
-  const cartId = session.client_reference_id;
+  const cartID = session.client_reference_id;
   const shippingAddress = session.metadata;
   const orderPrice = session.amount_total / 100;
 
@@ -144,7 +145,7 @@ exports.webhook=asynchandler(async (req,res,next)=>{
   if(process.env.SIG_SECRET){
      try {
       event = stripe.webhooks.constructEvent(
-        request.body,
+        req.body,
         signature,
         process.env.SIG_SECRET
       );
@@ -154,7 +155,7 @@ exports.webhook=asynchandler(async (req,res,next)=>{
     }
   }
    if(event.type=='checkout.session.completed'){
-    createCardOrder(event.object.data);
+    createCardOrder(event.data.object);
   }
   }
 
