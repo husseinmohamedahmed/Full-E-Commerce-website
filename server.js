@@ -22,11 +22,11 @@ const {webhook}=require('./services/Order-service.js')
 const customError=require('./utils/customer-error');
 const globalError=require('./middlewares/Error');
 app.set('query parser', 'extended');
+app.post('/webhook-checkout', express.raw({type: 'application/json'}),webhook)
 app.use(express.json()); 
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname,'uploads')));
-app.post('/webhook-checkout', express.raw({type: 'application/json'}),webhook)
 app.use('/api/v1/categories',categoryRoutes);
 app.use('/api/v1/subcategories',subCategoryRoutes);
 app.use('/api/v1/Brands',BrandRoutes);
