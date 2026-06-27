@@ -3,7 +3,7 @@ const router=express.Router();
 const User=require('../models/User-Model');
 const {uploadOneImage}=require('../middlewares/uploadImageMiddleware')
 const {check,validationResult}=require('express-validator')
-const {createUser,getAllUsers,getUser,updateUser,deleteUser,resizeUser,uploadUser,changePassword,getUserLoggedData,updateUserPassword,updateUserLoggedData,deleteUserLoggedData}=require('../services/User-Service');
+const {createUser,getAllUsers,getUser,updateUser,deleteUser,resizeUser,uploadUser,changePassword,getUserLoggedData,updateUserPassword,updateUserLoggedData,deleteUserLoggedData}=require('../services/User-service');
 const {getUserValidator,createUserValidator,deleteUserValidator,updateUserValidator,changePasswordValidator,updatePasswordValidator,updateUserLoggedDataValidator}=require('../utils/validators/UserValidator')
 const {allowedTo,protect}=require('../services/Auth-service')
 router.route('/')
