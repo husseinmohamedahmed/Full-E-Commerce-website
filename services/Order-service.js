@@ -155,6 +155,7 @@ exports.webhook=asynchandler(async (req,res,next)=>{
     }
   }
    if(event.type=='checkout.session.completed'){
+    console.log(event);
     createCardOrder(event.data.object);
   }
   }
