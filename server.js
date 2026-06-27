@@ -17,7 +17,8 @@ const wishlistRoutes=require('./routes/Wishlist-routes');
 const addressRoutes=require('./routes/Address-routes.js');
 const couponRoutes=require('./routes/Coupon-routes.js');
 const cartRoutes=require('./routes/Cart-routes.js');
-const orderRoutes=require('./routes/Order-routes.js')
+const orderRoutes=require('./routes/Order-routes.js');
+const {webhook}=require('./services/Order-service.js')
 const customError=require('./utils/customer-error');
 const globalError=require('./middlewares/Error');
 app.set('query parser', 'extended');
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname,'uploads')));
+app.post('/webhook-checkout', express.raw({type: 'application/json'}),webhook)
 app.use('/api/v1/categories',categoryRoutes);
 app.use('/api/v1/subcategories',subCategoryRoutes);
 app.use('/api/v1/Brands',BrandRoutes);

@@ -105,4 +105,28 @@ exports.checkOutSession= asynchandler(async (req,res,next)=>{
 
     })
       res.status(200).json({ status: 'success', session });
-})
+}) 
+
+
+exports.webhook=asynchandler(async (req,res,next)=>{
+  let event= req.body;
+  const signature = req.headers['stripe-signature'];
+  if(process.env.SIG_SECRET){
+     try {
+      event = stripe.webhooks.constructEvent(
+        request.body,
+        signature,
+        process.env.SIG_SECRET
+      );
+    } catch (err) {
+      console.log(`⚠️  Webhook signature verification failed.`, err.message);
+      return res.status(400).json(" Webhook signature verification failed")
+    }
+  }
+   if(event.type='payment_intent.succeeded'){
+    console.log(event.object);
+  }
+  }
+
+ 
+)
