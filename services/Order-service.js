@@ -140,6 +140,7 @@ const createCardOrder=async (session)=>{
 }
 
 exports.webhook=asynchandler(async (req,res,next)=>{
+  console.log("testing webhook")
   let event= req.body;
   const signature = req.headers['stripe-signature'];
   if(process.env.SIG_SECRET){
