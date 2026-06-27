@@ -3,7 +3,7 @@ const router=express.Router();
 const Brand=require('../models/Brand-Model');
 const {uploadOneImage}=require('../middlewares/uploadImageMiddleware')
 const {check,validationResult}=require('express-validator')
-const {createBrand,getAllBrands,getBrand,updateBrand,deleteBrand,resizeBrand,uploadBrand}=require('../services/Brand-Service');
+const {createBrand,getAllBrands,getBrand,updateBrand,deleteBrand,resizeBrand,uploadBrand}=require('../services/Brand-service.js');
 const {getBrandValidator,createBrandValidator,deleteBrandValidator,updateBrandValidator}=require('../utils/validators/BrandValidator')
 const {allowedTo,protect}=require('../services/Auth-service')
 router.route('/')
