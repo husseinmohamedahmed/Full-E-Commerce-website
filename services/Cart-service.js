@@ -17,6 +17,9 @@ exports.addToCart=asynchandler(async (req,res,next)=>{
     let cart=await Cart.findOne({user:req.user._id});
     const{productId,color}=req.body;
     const product=await Product.findById(productId);
+    if (!product) {
+    return next(new customError("Product not found", 404));
+}
     if(product.quantity===0){
         return next(new customError("Product is not available right now"))
     }
