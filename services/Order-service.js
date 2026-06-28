@@ -101,8 +101,7 @@ exports.checkOutSession= asynchandler(async (req,res,next)=>{
         success_url:`${req.protocol}://${req.get('host')}/api/v1/orders`,
         cancel_url:`${req.protocol}://${req.get('host')}/api/v1/carts`,
         client_reference_id:req.params.cartID,
-        customer_email:req.user.email,
-        metadata:req.body.shippingAddress
+        customer_email:req.user.email
 
     })
       res.status(200).json({ status: 'success', session });
@@ -118,7 +117,6 @@ const createCardOrder=async (session)=>{
   const order= await Order.create({
      user:user._id,
      cartItems:cart.cartItems,
-     shippingAddress,
      totalOrderPrice:orderPrice,
      isPaid:true,
      paymentMethod:'card',
