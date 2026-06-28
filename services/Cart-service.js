@@ -21,7 +21,7 @@ exports.addToCart=asynchandler(async (req,res,next)=>{
     return next(new customError("Product not found", 404));
 }
     if(product.quantity===0){
-        return next(new customError("Product is not available right now"))
+        return next(new customError("Product is not available right now",400))
     }
     if(!cart){
         cart=await Cart.create({

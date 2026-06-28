@@ -13,5 +13,5 @@ router.route('/:id')
      .get(protect,allowedTo('admin','manager','user'),getSpecificOrderValidator,getSpecificOrder)
 router.put('/:id/updateToPaid',protect,allowedTo('admin'),updateOrderStatusValidator,updateOrderToPaid)
 router.put('/:id/updateToDelivered',protect,allowedTo('admin'),updateOrderStatusValidator,updateOrderToDelivered)
-router.post( '/checkout-session/:cartID',protect,allowedTo('user'),checkOutSession)
+router.get( '/checkout-session/:cartID',protect,allowedTo('user'),checkOutSession)
 module.exports=router
