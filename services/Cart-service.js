@@ -17,6 +17,9 @@ exports.addToCart=asynchandler(async (req,res,next)=>{
     let cart=await Cart.findOne({user:req.user._id});
     const{productId,color}=req.body;
     const product=await Product.findById(productId);
+    if(product.quantity===0){
+        return next(new customError("Product is not available right now"))
+    }
     if(!cart){
         cart=await Cart.create({
             user:req.user._id,
@@ -28,6 +31,9 @@ exports.addToCart=asynchandler(async (req,res,next)=>{
         });
 
         if(cartItemIndex>-1){
+            if(cart.cartItems[cartItemIndex].quantity===product.quantity){
+                return next(new customError("Not enough product quantity in the store"))
+            }
             cart.cartItems[cartItemIndex].quantity++;
         }
         else{

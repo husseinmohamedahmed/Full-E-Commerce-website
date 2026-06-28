@@ -55,10 +55,19 @@ reviewSchema.statics.calcAverageRatingsAndQuantity= async function(productId){
 reviewSchema.post('save',async function(){
    await this.constructor.calcAverageRatingsAndQuantity(this.product)
 })
-reviewSchema.post(/^findOneAnd/, async function(doc) {
-    if (doc) {
-        await doc.constructor.calcAverageRatingsAndQuantity(doc.product);
-    }
-});
+reviewSchema.post(
+  'deleteOne',
+  { document: true, query: false },
+  async function () {
+    await this.constructor.calcAverageRatingsAndQuantity(this.product);
+  }
+); 
 
+reviewSchema.post(
+  'updateOne',
+  { document: true, query: false },
+  async function () {
+    await this.constructor.calcAverageRatingsAndQuantity(this.product);
+  }
+);
 module.exports=mongoose.model('review',reviewSchema)

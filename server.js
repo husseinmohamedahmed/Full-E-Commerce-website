@@ -21,9 +21,11 @@ const orderRoutes=require('./routes/Order-routes.js');
 const {webhook}=require('./services/Order-service.js')
 const customError=require('./utils/customer-error');
 const globalError=require('./middlewares/Error');
+const mongoSanitize = require('express-mongo-sanitize');
 app.set('query parser', 'extended');
 app.post('/webhook-checkout', express.raw({type: 'application/json'}),webhook)
-app.use(express.json()); 
+app.use(express.json({limit:'20kb'}));
+
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname,'uploads')));

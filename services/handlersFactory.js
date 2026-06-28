@@ -48,24 +48,30 @@ exports.getAll=(Model,name)=>
 exports.updateOne=(Model)=>
   asynchandler(async (req, res, next) => {
     const { id } = req.params;
-    const document = await Model.findOneAndUpdate(
+    const document = await Model.findOne(
       { _id: id },
-      req.body ,
-      { new: true },
+     
     );
     if (!document) {
       return next(new customError("The document is not found", 404));
     }
-    
+    if(req.body.title){
+      document.title=req.body.title
+    }
+    if(req.body.rating){
+      document.rating=req.body.rating
+    }
+    await document.save();
     res.status(200).json({ status: "success", data: document });
   })
 
 
 exports.deleteOne=(Model)=>{return asynchandler(async (req, res, next) => {
   const { id } = req.params;
-  const document= await Model.findByIdAndDelete(id);
+  const document= await Model.findById(id);
   if (!document) {
     return next(new customError(` No Document found for this id ${id}`, 404));
   }
+  await document.deleteOne();
   res.status(204).json({ status: "success", data: document});
 })}
